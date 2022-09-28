@@ -8,6 +8,8 @@ namespace TwitterSvc
     {
         ManualResetEvent GetManualResetEvent();
 
+        public void setManualResetEvent();
+
         Queue GetQueue();
 
         Task DoWork(CancellationToken cancellationToken);

@@ -16,7 +16,9 @@
       "launchUrl": "api/twitter",
       "applicationUrl": "https://localhost:7000;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "apiurl": "https://api.twitter.com/2/tweets/sample/stream",
+        "token": "AAAAAAAAAAAAAAAAAAAAAGg1hQEAAAAA2zLf9JmtVqdDpOG1iiH0f1J3fPE%3DHv1f53hJyZsexBHopnPIPxc297uscuf4Q9xLov6n3CxXAG4QoI"
       }
     },
     "IIS Express": {

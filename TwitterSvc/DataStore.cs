@@ -50,7 +50,7 @@ namespace TwitterSvc
             return dictHdata;
         }
 
-        private void UpdateData(TweetData data)
+        public void UpdateData(TweetData data)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace TwitterSvc
             return;
         }
 
-        private void UpdateHashtags(TweetData data)
+        public void UpdateHashtags(TweetData data)
         {
             IList<MatchCollection> listMatches = new List<MatchCollection>();
             ParseTweetData(data,listMatches);
@@ -76,7 +76,7 @@ namespace TwitterSvc
             return;
         }
 
-        private void UpdateHashtagCount(IList<MatchCollection> listMatches)
+        public void UpdateHashtagCount(IList<MatchCollection> listMatches)
         {
             foreach (MatchCollection coll in listMatches)
             {
@@ -98,7 +98,7 @@ namespace TwitterSvc
             return;
         }
 
-        private void ParseTweetData(TweetData data, IList<MatchCollection> listMatches)
+        public void ParseTweetData(TweetData data, IList<MatchCollection> listMatches)
         {
             try
             {
@@ -112,7 +112,6 @@ namespace TwitterSvc
                     if (data.text != null)
                     {
                         var matches = rx.Matches(data.text);
-                        Console.WriteLine(matches.Count);
                         logger.LogInformation($"count of words containing #: {matches.Count}");
 
                         foreach (Match match in matches)
@@ -134,6 +133,5 @@ namespace TwitterSvc
             }
             return;
         }
-
     }
 }
