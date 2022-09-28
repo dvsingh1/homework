@@ -198,20 +198,6 @@ namespace TwitterSvcTest
         }
 
         [TestMethod]
-        public void DataStoreParseTestWithHashtagAndHashCharacterInputData()
-        {
-            using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-            var logger = loggerFactory.CreateLogger<DataStore>();
-            DataStore store = new DataStore(logger);
-            IList<MatchCollection> listMatches = new List<MatchCollection>();
-            TweetData data = new TweetData();
-            data.id = 1;
-            data.text = "a#b #cd ef";
-            store.ParseTweetData(data, listMatches);
-            Assert.AreEqual(listMatches.Count, 3);
-        }
-
-        [TestMethod]
         public void DataStoreParseTestWithTwoUniqueHashtagInputData()
         {
             using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -262,7 +248,7 @@ namespace TwitterSvcTest
             data.text = "abcd #b #cd #b #b ef";
             store.ParseTweetData(data, listMatches);
             int count = listMatches.Count;
-            Assert.AreEqual(listMatches.Count, 2);
+            Assert.AreEqual(listMatches.Count, 4);
             IDictionary<string, int> resp = store.GetPopularHashtagsData(3);
             count = resp.Count;
             Assert.AreEqual(count, 0);
