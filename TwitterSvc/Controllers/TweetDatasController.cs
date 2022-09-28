@@ -6,6 +6,7 @@ using System.Web.Http.Description;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TwitterSvc.Models;
 
@@ -17,11 +18,14 @@ namespace TwitterSvc.Controllers
     {
         private readonly TwitterContext _context;
         private readonly IDataStore dataStore;
+        private readonly IStartWorker startWorker;
 
-        public TweetDatasController(TwitterContext context, IDataStore dataStore)
+        public TweetDatasController(TwitterContext context, IStartWorker startWorker, IDataStore dataStore)
         {
             _context = context;
+            this.startWorker = startWorker;
             this.dataStore = dataStore;
+            startWorker.setManualResetEvent();
         }
 
         public async ValueTask<int> SaveDataAsync(int count)

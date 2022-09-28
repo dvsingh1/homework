@@ -1,26 +1,25 @@
 # homework
 code repository
 This is the repository created to retrieve tweet data using Twitter APIs.
-There are two solutions in this repository.
+There are three solutions in this repository.
 1.  TwitterSvc.sln   - This is the solution that provides the APIs.
        There are two APIs that are usable:
            https://localhost:7000/api/TweetDatas/   to get the hashtag distribution
            https://localhost:7000/api/TweetDatas/10   to get the 10 most recent tweets sampled
 2.  TwitterConsole.sln - This is the console application that calls these two APIs and displays the data on the console window.
+3. TwitterSvcTest.sln - This is the solution with unit tests for TwitterSvc classes
 
 The authorization token is at line 38 in the file TwitterSvc/TwitterAccess.cs. That will have to changed to the value needed
 and the project should be recompiled.
 
-The TwitterSvc API server has unresolved locking issues when using the twitter API
-            https://api.twitter.com/2/tweets/sample/stream
+In the TwitterSvc solution, the launchSettings.json has the following environment variables:
+        "apiurl": "https://api.twitter.com/2/tweets/sample/stream",
+        "token": "AAAAAAAAAAAAAAAAAAAAAGg1hQEAAAAA2zLf9JmtVqdDpOG1iiH0f1J3fPE%3DHv1f53hJyZsexBHopnPIPxc297uscuf4Q9xLov6n3CxXAG4QoI"
 
-The data is streaming down and all the parsing is working as expected. However, the APIs do not get initialized correctly.
+The value for the apiurl variable is the URL for the Twitter API.
+The variable "token" is used to specify the authorization token value. This should be changed to the value that is correct for the user.
 
-For this demonstration, the following is URL is used instead
-            https://api.twitter.com/2/tweets/search/recent?query=%23caturday%20has%3Aimages%20-is%3Aretweet
+The solutions can be downloaded from the repository https://github.com/dvsingh1/homework.git. All the solutions are compiled using visual studio 2022
 
-With this URL, the APIs generate the hashtag information and the 10 most recent tweets.
-
-Both the solutions can be downloaded from the repository https://github.com/dvsingh1/homework.git
 
 

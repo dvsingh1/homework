@@ -13,7 +13,6 @@ namespace TwitterSvc
         private readonly ILogger<StartWorker> logger;
         private readonly ITwitterAccess twitterAccess;
         private readonly IDataStore dataStore;
-        private int number = 0;
         private ManualResetEvent oSignalEvent = new ManualResetEvent(false);
         private Queue dataQueue = new Queue();
         public StartWorker(ILogger<StartWorker> logger, ITwitterAccess access, IDataStore dataStore)
@@ -26,6 +25,11 @@ namespace TwitterSvc
         public ManualResetEvent GetManualResetEvent()
         {
             return oSignalEvent;
+        }
+
+        public void setManualResetEvent()
+        {
+            oSignalEvent.Set();
         }
 
         public Queue GetQueue()
@@ -41,17 +45,21 @@ namespace TwitterSvc
             asyncData.oSignalEvent = oSignalEvent;
             Thread thread = new Thread(ProcessFunc);
             thread.Start(asyncData);
+            bool start = true;
 
             oSignalEvent.Set();
-
             while (!cancellationToken.IsCancellationRequested)
             {
-                oSignalEvent.WaitOne(TimeSpan.FromSeconds(1));
-                twitterAccess.GetData();
-                //Interlocked.Increment(ref number);
-                //logger.LogInformation($"Worker printing number: {number}");
-                //oSignalEvent.Reset();
-                await Task.Delay(1000 * 1);
+                oSignalEvent.WaitOne();
+                if (start)
+                {
+                    await Task.Delay(1000 * 1);
+                    start = false;
+                }
+                else
+                {
+                    twitterAccess.GetData();
+                }
             }
         }
 
@@ -71,8 +79,6 @@ namespace TwitterSvc
                 logger.LogInformation($"new data count in worker: {count}");
                 dict = dataStore.GetPopularHashtagsData(10);
                 oSignalEvent.Reset();
-                //oSignalEvent.WaitOne(TimeSpan.FromSeconds(5));
-                //Thread.Sleep(5000);
             }
 
         }
